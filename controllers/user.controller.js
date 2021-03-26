@@ -27,8 +27,12 @@ module.exports.search = async (req,res) => {
     // var matchedUsers = db.get('users').value().filter(user =>{
     //     return  user.name.indexOf(q) !== -1;
     // });
-    const id = '605766753de9d71b144d0cdb'
-    const deletedUser =  User.findByIdAndDelete(id);
+    const id = '605766753de9d71b144d0cde'
+    const deletedUser =  await User.findOneAndUpdate(
+        {_id: id},
+        {name: 'newUpdate'},
+        {new: true} 
+    );
     User = deletedUser;
     //console.log(deletedUser);
 
