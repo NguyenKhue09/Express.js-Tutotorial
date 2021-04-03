@@ -22,7 +22,7 @@ const sessionMiddleware = require('./middlewares/session.middleware');
 
 
 const app = express();
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());// for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
