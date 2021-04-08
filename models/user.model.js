@@ -1,10 +1,11 @@
 
 const mongoose = require('mongoose');
-
+const Schema = mongoose.Schema;
 
 
 var x = 1;
 const userShema = new mongoose.Schema({
+
     email: String,
     password: String,
     name: String,
@@ -12,12 +13,11 @@ const userShema = new mongoose.Schema({
     phone: String,
     test: {
         type: Number,
-        //set: tryGetter
-        min: x,
+        //set: tryGetter, // 1 document 
+        // min: x,
         // validate: {
-
         //     validator: (v) => { 
-        //         return  ;
+        //         return v > x  ;
         //     },
         //     message: 'Test must be bigger than ' + x,
         // }
@@ -33,22 +33,24 @@ module.exports = {
 
 
 // middleware 
-userShema.pre('save',(next) => {
+// userShema.pre('save',(next) => {
 
-    this.test = this.test + 1;
+//     this.test = this.test + 1;
 
-    next();
-})
+//     next();
+// })
 
-// function tryGetter(name) {
-
-//     return name + "thanh cong";
+// function tryGetter(v) {
+ 
+//     // 1,2 lm tròn 1,5 
+//     // 1.2 + 3;
+//     return v + "thanh cong";
 // };
 
-
+// ghi đè cái field test
+// thêm field vào trong model
 // userShema.add({test: {
 //     type: Number,
-//     //set: tryGetter
 //     min: 2
 // }});
 
@@ -57,7 +59,9 @@ userShema.pre('save',(next) => {
 // };
 // const User = mongoose.model('User', userShema, 'users');
 
-// module.exports = {
-//     User,
-//     //setX,   
-// };  
+module.exports = {
+    User,
+    //setX,   
+};  
+
+//setX(2);

@@ -3,8 +3,9 @@ const db = require('../db');
 //const shortid = require('shortid');
 
 // lấy model
-var {User} = require('../models/user.model');
+var {User, setX} = require('../models/user.model');
 
+// setX(2);
 
 async function getAllUser() {
 
@@ -25,7 +26,7 @@ module.exports.index = async (req,res) => {
     const users = await getAllUser();
     
     //await del();
-    console.log(await update());
+    //console.log(await update());
     res.render('users/index', {
         users: users 
     });
@@ -50,17 +51,18 @@ async function del() {
 
     return deletedUser;
 }
-async function update() {
+(async () => {
 
-    const id = '605766753de9d71b144d0cdf'
+    const id = '605766753de9d71b144d0cde'
     const updateUser =  await User.findOneAndUpdate(
         {_id: id},
-        {name: 'newUpdate'},
+        {name: 'newUpdatetest+++'},
         {new: true} 
     );
 
-    return updateUser;
-}
+    console.log( updateUser );
+})();
+
 module.exports.search = async (req,res) => {
     // https://viblo.asia/p/nodejs-bai-4-query-parameters-bWrZn63QZxw
     var q= req.query.q;
@@ -74,7 +76,7 @@ module.exports.search = async (req,res) => {
     //     {new: true} 
     // );
 
-    const matchedUsers = await User.find({ name: { $regex: new RegExp(".*" + q + ".*", "i")}});
+    const matchedUsers = await User.find({ name: { $regex: new RegExp(".*" + q + ".*", "i")}}); 
 
 
 
@@ -82,19 +84,19 @@ module.exports.search = async (req,res) => {
         users: matchedUsers
     });
 
-    console.log(req.query);
+    //console.log(req.query);
 
 };
 
 module.exports.create = (req,res) => {
-    console.log(req.cookies); // in ra undefined de doc dc thi phai dung middleware cookie-parser
+    //console.log(req.cookies); // in ra undefined de doc dc thi phai dung middleware cookie-parser
 
     res.render('users/create');
 };
 
 module.exports.get = async (req,res) => {
     // https://expressjs.com/en/guide/routing.html
-    //setX(1);
+    // setX(2);
     const id= req.params.id;
     // const user = db.get('users').find({ id: id }).value();
     const user = await User.findById(id);
@@ -117,7 +119,7 @@ module.exports.postCreate = (req,res) => {
     // thêm mới 1 user
     const newUser = new User(req.body);
          newUser.save((err) => {
-        if(err) console.log("failed");
+        if(err) console.log(err);
     });
 
         
@@ -132,6 +134,45 @@ module.exports.postCreate = (req,res) => {
     res.redirect('/users');
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // var numberofDocs;
     // User.count({}, setNumberofDocuments);
@@ -163,10 +204,10 @@ module.exports.postCreate = (req,res) => {
 
     //     return x;
     // }
-    async function get() {
+    ( async  () =>  {
         const value = await User.estimatedDocumentCount({}).distinct('name');
         console.log(value.length);
-    }
+    })()
     //get();
     // distinct('name',(err,value) => {
         
