@@ -9,7 +9,7 @@ module.exports.postCreate = function(req,res,next) {
     if(errors.length) {
         res.render('users/create',{
             errors: errors,
-            values: req.body,
+            values: req.body,   
         });
         return;
     }

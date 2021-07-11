@@ -9,6 +9,12 @@ const cartRoute = require('./routes/cart.route');
 const productRoute = require('./routes/product.route');
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URL, { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true 
+});
 
 const authMiddleware = require('./middlewares/auth.middleware');
 const sessionMiddleware = require('./middlewares/session.middleware');
@@ -16,7 +22,7 @@ const sessionMiddleware = require('./middlewares/session.middleware');
 
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());// for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -34,6 +40,8 @@ app.get('/',(req,res) => {
 // gom tất cả các route của user vào trong 1 file.
 // có middleware auth.. để ngăn khi chưa login thì phải chuyển tới trang login rồi ms sang được trang khác.
 // chức năng phụ là truyền thêm user đăng nhập để hiện tên lên nav-bar.
+
+app.use(express.static('public'));
 app.use('/users', authMiddleware.requireAuth, userRoute);
 app.use('/auth',authRoute);
 app.use('/products', productRoute);
@@ -41,7 +49,7 @@ app.use('/cart',cartRoute);
 app.use(sessionMiddleware); // nếu để dưới dòng 42 thì ko hoạt động
 
 
-app.use(express.static('public'));
+//app.use(express.static('public'));
 
 app.listen(port, () => {
     console.log('Server listening on port ' + port);
